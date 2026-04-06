@@ -23,29 +23,33 @@ public class BucketListDriver {
 	
 	public static void main(String[] args) {
 		// Declare Variables
-		int choice;
-		
-		// Add Fictional Items For Test Purposes
-		ListManager.myExperienceList.add(new ExperienceItem("Great White shark cage dive", 3));
-		ListManager.myTravelList.add(new TravelItem("Alaska", 3));
-		ListManager.myPersonalGrowthList.add(new PersonalGrowthItem("Learn to speak Spanish", 3));
-		ListManager.myExperienceList.add(new ExperienceItem("Metalica Concert", 2));
-		ListManager.myTravelList.add(new TravelItem("Australia", 2));
-		ListManager.myPersonalGrowthList.add(new PersonalGrowthItem("Learn Java software programming", 2));
-		
-		do {
-            ListManager.printMainMenu();
-            choice = ListManager.getIntInput("Choose an option: ");
-            switch (choice) {
-                case 1 -> ListManager.addBucketListItem();
-                case 2 -> ListManager.MarkItemCompleted();
-                case 3 -> ListManager.viewNextItem();
-                case 4 -> ListManager.searchCompletedItem();
-                case 5 -> System.out.println("\nGoodbye!");
-                default -> System.out.println("\nInvalid option. Try again.");
-            }
-        } while (choice != 5);
-		
-    }
-// ***** END OF main *****		
-}
+				// int choice;
+				
+				// Add Fictional Items For Test Purposes
+				ListManager.myExperienceList.add(new ExperienceItem("Great White shark cage dive", 3));
+				ListManager.myTravelList.add(new TravelItem("Alaska", 3));
+				ListManager.myPersonalGrowthList.add(new PersonalGrowthItem("Learn to speak Spanish", 3));
+				ListManager.myExperienceList.add(new ExperienceItem("Metalica Concert", 2));
+				ListManager.myTravelList.add(new TravelItem("Australia", 2));
+				ListManager.myPersonalGrowthList.add(new PersonalGrowthItem("Learn Java software programming", 2));
+				
+				new MainFrame();
+				
+				
+				/*
+				do {
+		            ListManager.printMainMenu();
+		            choice = ListManager.getIntInput("Choose an option: ");
+		            switch (choice) {
+		                case 1 -> ListManager.addBucketListItem();
+		                case 2 -> ListManager.MarkItemCompleted();
+		                case 3 -> ListManager.viewNextItem();
+		                case 4 -> ListManager.searchCompletedItem();
+		                case 5 -> System.out.println("\nGoodbye!");
+		                default -> System.out.println("\nInvalid option. Try again.");
+		            }
+		        } while (choice != 5);
+				*/
+		    }
+		// ***** END OF main *****		
+		}

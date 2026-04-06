@@ -23,6 +23,7 @@ public class TravelItem {
 	private String description;
 	private int priority;
 	private LocalDateTime timestamp;
+	private LocalDateTime completionTime;
 
 	//Constructors
 	public TravelItem() {
@@ -95,6 +96,20 @@ public class TravelItem {
 	 */
 	public void setTimestamp() {
 		this.timestamp = LocalDateTime.now();
+	}
+	
+	/**
+	 * @return LocalDateTime completionTime
+	 */
+	public LocalDateTime getCompletionTime() {
+		return completionTime;
+	}
+
+	/**
+	 * @param LocalDateTime completionTime
+	 */
+	public void setCompletionTime() {
+		this.completionTime = LocalDateTime.now();
 	}
 
 }
