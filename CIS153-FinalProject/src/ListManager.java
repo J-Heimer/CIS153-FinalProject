@@ -17,6 +17,7 @@
 
 import java.util.Comparator;
 import java.util.PriorityQueue;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -34,6 +35,8 @@ public class ListManager {
 	static PriorityQueue<ExperienceItem> myExperienceList = new PriorityQueue<ExperienceItem>(experiencePriorityComparator);
 	static PriorityQueue<PersonalGrowthItem> myPersonalGrowthList = new PriorityQueue<PersonalGrowthItem>(personalGrowthPriorityComparator);
 	static ArrayList<Object> completedItems = new ArrayList<>();
+	static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss a");
+
 	
 	static Scanner scanner = new Scanner(System.in);
 	
@@ -226,6 +229,78 @@ public class ListManager {
 			priority = getIntInput("Enter the Priority 1 - 5: ");
 		}
 		myPersonalGrowthList.add(new PersonalGrowthItem(description, priority));
+	}
+	
+	public static String byCategoryString() {
+		StringBuilder sb = new StringBuilder();
+		String categoryString;
+		
+		sb.append(String.format("%-18s %-36s %s", " CATEGORY", "DESCRIPTION", "DATE COMPLETED\n"));
+		sb.append("-".repeat(80) + "\n");
+		
+		if (!completedItems.isEmpty()) {
+			System.out.println("");
+			for (Object item : completedItems) {
+				if (item instanceof TravelItem) {
+					TravelItem tI = (TravelItem) item;
+					sb.append(String.format("%-18s %-36s %s", " " + tI.getCategory(), tI.getDescription(), tI.getCompletionTime().format(formatter) + "\n"));
+				}
+			}
+			for (Object item : completedItems) {
+				if (item instanceof ExperienceItem) {
+					ExperienceItem eI = (ExperienceItem) item;
+					sb.append(String.format("%-18s %-36s %s", " " + eI.getCategory(), eI.getDescription(), eI.getCompletionTime().format(formatter) + "\n"));
+				}
+			}
+			for (Object item : completedItems) {
+				if (item instanceof PersonalGrowthItem) {
+					PersonalGrowthItem pgI = (PersonalGrowthItem) item;
+					sb.append(String.format("%-18s %-36s %s", " " + pgI.getCategory(), pgI.getDescription(), pgI.getCompletionTime().format(formatter) + "\n"));
+				}
+			}
+		}
+		else {
+			sb.append("\n");
+			sb.append(String.format("%58s","You Have Not Completed Any Items Yet!\n"));
+		}
+
+		categoryString = sb.toString();
+		System.out.print(categoryString);
+		return categoryString;
+	}
+	
+	public static String byCompletedString() {
+		StringBuilder sb = new StringBuilder();
+		String categoryString;
+		
+		sb.append(String.format("%-18s %-36s %s", " CATEGORY", "DESCRIPTION", "DATE COMPLETED\n"));
+		sb.append("-".repeat(80) + "\n");
+		
+		if (!completedItems.isEmpty()) {
+			System.out.println("");
+			for (Object item : completedItems) {
+				if (item instanceof TravelItem) {
+					TravelItem tI = (TravelItem) item;
+					sb.append(String.format("%-18s %-36s %s", " " + tI.getCategory(), tI.getDescription(), tI.getCompletionTime().format(formatter) + "\n"));
+				}
+				if (item instanceof ExperienceItem) {
+					ExperienceItem eI = (ExperienceItem) item;
+					sb.append(String.format("%-18s %-36s %s", " " + eI.getCategory(), eI.getDescription(), eI.getCompletionTime().format(formatter) + "\n"));
+				}
+				if (item instanceof PersonalGrowthItem) {
+					PersonalGrowthItem pgI = (PersonalGrowthItem) item;
+					sb.append(String.format("%-18s %-36s %s", " " + pgI.getCategory(), pgI.getDescription(), pgI.getCompletionTime().format(formatter) + "\n"));
+				}
+			}
+		}
+		else {
+			sb.append("\n");
+			sb.append(String.format("%58s","You Have Not Completed Any Items Yet!\n"));
+		}
+
+		categoryString = sb.toString();
+		System.out.print(categoryString);
+		return categoryString;
 	}
 	
 }
