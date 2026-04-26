@@ -53,11 +53,19 @@ public class MainFrame extends JFrame implements ActionListener {
 	JRadioButton priority5Button;
 	JButton enterItemAniButton;
 	JButton returnMainAniButton;
+	JLabel aniPanelSpace1;
+	JLabel aniPanelSpace2;
+	JLabel aniPanelSpace3;
+	JLabel aniPanelSpace4;
+	JLabel aniPanelSpace5;
 	// View Next Items Menu frame buttons
 	JTextField	travelOutputVniField;
 	JTextField	expOutputVniField;
 	JTextField	pgOutputVniField;
 	JButton returnMainVniButton;
+	JLabel vniPanelSpace1;
+	JLabel vniPanelSpace2;
+	JLabel vniPanelSpace3;
 	// Mark Items Complete Menu frame buttons
 	JButton travelCompleteButton;
 	JButton expCompleteButton;
@@ -69,14 +77,17 @@ public class MainFrame extends JFrame implements ActionListener {
 	// View Completed Items Menu frame buttons
 	JButton sortCategoryButton;
 	JButton sortCompletedButton;
+	JButton sortAlphaButton;
 	JButton returnMainVcButton;
 	// View By Category frame buttons
 	JButton returnByCatButton;
-	
+	JTextArea byCategoryTextArea;
 	// View By Completion frame buttons
 	JButton returnByDateButton;
-	JTextArea byCategoryTextArea;
 	JTextArea byCompletedTextArea;
+	// View By Completion frame buttons
+	JButton returnByAlphaButton;
+	JTextArea byAlphaTextArea;
 	// Initialize Panels
 	JPanel mainPanel;
 	JPanel addNewItemPanel;
@@ -85,6 +96,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	JPanel viewCompletedPanel;
 	JPanel byCategoryPanel;
 	JPanel byCompletedPanel;
+	JPanel byAlphaPanel;
 	
 	int itemCategory;  // Travel = 1, Experience = 2, Personal Growth = 3
 	int itemPriority;  // Urgent = 1, High = 2, Medium = 3, Low = 4, Minor = 5
@@ -108,7 +120,6 @@ public class MainFrame extends JFrame implements ActionListener {
 		exitButton = new JButton("Exit Program");
 		exitButton.setPreferredSize(new Dimension(200,25));
 
-		
 		newItemButton.addActionListener(this);
 		viewNextItemButton.addActionListener(this);
 		markItemButton.addActionListener(this);
@@ -163,17 +174,17 @@ public class MainFrame extends JFrame implements ActionListener {
 		priority4Button.setPreferredSize(new Dimension(70,25));
 		priority5Button = new JRadioButton("Minor");
 		priority5Button.setPreferredSize(new Dimension(70,25));
-		JLabel aniPanelSpace1 = new JLabel("                                                                                                                                                                    ");
-		Font aniSpaceFont = aniPanelSpace1.getFont().deriveFont(Font.BOLD, 10f);
-		aniPanelSpace1.setFont(aniSpaceFont);
-		JLabel aniPanelSpace2 = new JLabel("                                                                                                                                                                    ");
-		aniPanelSpace2.setFont(aniSpaceFont);
-		JLabel aniPanelSpace3 = new JLabel("                                                                                                                                                                    ");
-		aniPanelSpace3.setFont(aniSpaceFont);
-		JLabel aniPanelSpace4 = new JLabel("                                     ");
-		aniPanelSpace4.setFont(aniSpaceFont);
-		JLabel aniPanelSpace5 = new JLabel("                                     ");
-		aniPanelSpace3.setFont(aniSpaceFont);
+		aniPanelSpace1 = new JLabel("                                                           ");
+		aniPanelSpace1.setFont(new Font("Monospaced", Font.BOLD, 14));
+		aniPanelSpace2 = new JLabel("                                            ");
+		aniPanelSpace2.setFont(new Font("Monospaced", Font.BOLD, 18));
+		aniPanelSpace2.setForeground(Color.RED);
+		aniPanelSpace3 = new JLabel("                                                           ");
+		aniPanelSpace3.setFont(new Font("Monospaced", Font.BOLD, 14));
+		aniPanelSpace4 = new JLabel("                 ");
+		aniPanelSpace4.setFont(new Font("Monospaced", Font.BOLD, 14));
+		aniPanelSpace5 = new JLabel("                 ");
+		aniPanelSpace5.setFont(new Font("Monospaced", Font.BOLD, 14));
 		
 		ButtonGroup itemCategory = new ButtonGroup();
 		itemCategory.add(travelCatButton);
@@ -198,8 +209,8 @@ public class MainFrame extends JFrame implements ActionListener {
 		enterItemAniButton.addActionListener(this);
 		returnMainAniButton.addActionListener(this);
 		
-		travelCatButton.doClick();			// Sets travelCatButton as the default (Travel Category)
-		priority5Button.doClick();			// Sets priority5Button as the default (minor)
+		travelCatButton.doClick();		// Sets travelCatButton as the default (Travel Category)
+		priority5Button.doClick();		// Sets priority5Button as the default (minor)
 		
 		addNewItemPanel = new JPanel();
 		addNewItemPanel.setBackground(new Color(55,235,235));
@@ -251,13 +262,12 @@ public class MainFrame extends JFrame implements ActionListener {
 		pgOutputVniField.setHorizontalAlignment(SwingConstants.CENTER);
 		returnMainVniButton = new JButton("Return To Main Menu");
 		returnMainVniButton.setPreferredSize(new Dimension(200,25));
-		JLabel vniPanelSpace1 = new JLabel("                                                                                                                                                                    ");
-		Font vniSpaceFont = vniPanelSpace1.getFont().deriveFont(Font.BOLD, 10f);
-		aniPanelSpace1.setFont(vniSpaceFont);
-		JLabel vniPanelSpace2 = new JLabel("                                                                                                                                                                    ");
-		vniPanelSpace2.setFont(vniSpaceFont);
-		JLabel vniPanelSpace3 = new JLabel("                                                                                                                                                                    ");
-		vniPanelSpace3.setFont(vniSpaceFont);
+		vniPanelSpace1 = new JLabel("                                            ");
+		vniPanelSpace1.setFont(new Font("Monospaced", Font.BOLD, 14));
+		vniPanelSpace2 = new JLabel("                                            ");
+		vniPanelSpace2.setFont(new Font("Monospaced", Font.BOLD, 14));
+		vniPanelSpace3 = new JLabel("                                            ");
+		vniPanelSpace3.setFont(new Font("Monospaced", Font.BOLD, 14));
 		
 		returnMainVniButton.addActionListener(this);
 	
@@ -338,11 +348,13 @@ public class MainFrame extends JFrame implements ActionListener {
 		Font vcPanelTitleFont = viewCompletedPanelTitle.getFont().deriveFont(Font.BOLD, 16f);
 		viewCompletedPanelTitle.setFont(vcPanelTitleFont);
 		sortCategoryButton = new JButton("View By Category");
-		sortCategoryButton.setPreferredSize(new Dimension(200,25));
+		sortCategoryButton.setPreferredSize(new Dimension(235,25));
 		sortCompletedButton = new JButton("View By Date Completed");
-		sortCompletedButton.setPreferredSize(new Dimension(200,25));
+		sortCompletedButton.setPreferredSize(new Dimension(235,25));
+		sortAlphaButton = new JButton("View Alphabetically by Description");
+		sortAlphaButton.setPreferredSize(new Dimension(235,25));
 		returnMainVcButton = new JButton("Return To Main Menu");
-		returnMainVcButton.setPreferredSize(new Dimension(200,25));
+		returnMainVcButton.setPreferredSize(new Dimension(235,25));
 		JLabel vcPanelSpace1 = new JLabel("                                                                                                                            ");
 		Font vcSpaceFont = vcPanelSpace1.getFont().deriveFont(Font.BOLD, 13f);
 		vcPanelSpace1.setFont(vcSpaceFont);
@@ -350,9 +362,12 @@ public class MainFrame extends JFrame implements ActionListener {
 		vcPanelSpace2.setFont(vcSpaceFont);
 		JLabel vcPanelSpace3 = new JLabel("                                                                                                                            ");
 		vcPanelSpace3.setFont(vcSpaceFont);
+		JLabel vcPanelSpace4 = new JLabel("                                                                                                                            ");
+		vcPanelSpace4.setFont(vcSpaceFont);
 		
 		sortCategoryButton.addActionListener(this);
 		sortCompletedButton.addActionListener(this);
+		sortAlphaButton.addActionListener(this);
 		returnMainVcButton.addActionListener(this);
 		
 		viewCompletedPanel = new JPanel();
@@ -364,9 +379,10 @@ public class MainFrame extends JFrame implements ActionListener {
 		viewCompletedPanel.add(vcPanelSpace2);
 		viewCompletedPanel.add(sortCompletedButton);
 		viewCompletedPanel.add(vcPanelSpace3);
+		viewCompletedPanel.add(sortAlphaButton);
+		viewCompletedPanel.add(vcPanelSpace4);
 		viewCompletedPanel.add(returnMainVcButton);
-		
-		
+			
 // View By Category Panel
 		FlowLayout byCategoryPanelLayout = new FlowLayout();
 		byCategoryPanelLayout.setVgap(15);
@@ -410,6 +426,28 @@ public class MainFrame extends JFrame implements ActionListener {
 		byCompletedPanel.add(byCompletedPanelTitle);
 		byCompletedPanel.add(byCompletedTextArea);
 		byCompletedPanel.add(returnByDateButton);
+		
+// View By Alphabetical Panel		
+		FlowLayout byAlphaPanelLayout = new FlowLayout();
+		byAlphaPanelLayout.setVgap(15);
+		JLabel byAlphaPanelTitle = new JLabel("       Items Listed Alphabetically By Description       ");
+		Font byAlphaPanelTitleFont = byAlphaPanelTitle.getFont().deriveFont(Font.BOLD, 16f);
+		byAlphaPanelTitle.setFont(byAlphaPanelTitleFont);
+		byAlphaTextArea = new JTextArea(" ", 16, 80);
+		byAlphaTextArea.setEditable(false);
+		byAlphaTextArea.setFont(new Font("Monospaced", Font.BOLD, 12));
+		
+		returnByAlphaButton = new JButton("Return To View Completed Menu");
+		returnByAlphaButton.setPreferredSize(new Dimension(225,25));
+		
+		returnByAlphaButton.addActionListener(this);
+		
+		byAlphaPanel = new JPanel();
+		byAlphaPanel.setBackground(new Color(250,200,50));
+		byAlphaPanel.setLayout(byAlphaPanelLayout);
+		byAlphaPanel.add(byAlphaPanelTitle);
+		byAlphaPanel.add(byAlphaTextArea);
+		byAlphaPanel.add(returnByAlphaButton);
 
 // Frame Build
 		this.setTitle("Bucket List App");
@@ -420,16 +458,18 @@ public class MainFrame extends JFrame implements ActionListener {
 		this.setVisible(true);
 	}
 
+// BEGINNING OF ACTION LISTENERS
 	@Override
 	public void actionPerformed(ActionEvent e) {		
-// Main Menu Panel Buttons		
+// Main Menu Panel Buttons
+		// Add New Bucket List Item Button
 		if(e.getSource()==newItemButton) {
 			remove(mainPanel);
 			add(addNewItemPanel);
 			revalidate();
 	    	repaint();
 		}
-		
+		// View Next Items Button
 		if(e.getSource()==viewNextItemButton) {
 			remove(mainPanel);
 			add(viewNextItemPanel);
@@ -454,7 +494,7 @@ public class MainFrame extends JFrame implements ActionListener {
 			revalidate();
 	    	repaint();
 		}
-		
+		// Mark Item As Completed Button
 		if(e.getSource()==markItemButton) {
 			remove(mainPanel);
 			add(markCompletedPanel);
@@ -482,33 +522,20 @@ public class MainFrame extends JFrame implements ActionListener {
 			revalidate();
 	    	repaint();
 		}
-		
+		// View Completed Items Button
 		if(e.getSource()==viewCompletedButton) {
 			remove(mainPanel);
 			add(viewCompletedPanel);
 			revalidate();
 	    	repaint();
 		}
-		
+		// Exit Program Button
 		if(e.getSource()==exitButton) {
 			this.dispose();
 		}
 
-
-// Add New Bucket List Item Panel Buttons			
-		if(e.getSource()==returnMainAniButton) {
-			travelCatButton.doClick();				// Reset the travelCatButton default
-			priority5Button.doClick();				// Reset the priority5Button default
-			descriptionField.setText(" ");			// Clear the descriptionField
-			enterItemAniButton.setEnabled(true);	// ReEnable "Save New Item" button
-			remove(addNewItemPanel);
-			add(mainPanel);
-			revalidate();
-	    	repaint();
-		}
-
-		
-// View Next Items Panel Buttons			
+// View Next Items Panel Buttons
+		// Return To Main Menu Button
 		if(e.getSource()==returnMainVniButton) {
 			travelOutputVniField.setText(" ");	// Clear the Travel Field
 			expOutputVniField.setText(" ");		// Clear the Experience Field
@@ -519,28 +546,26 @@ public class MainFrame extends JFrame implements ActionListener {
 	    	repaint();
 		}
 		
-
 // Mark Item Completed Panel Buttons
+		// TRAVEL - Mark Complete Button
 		if(e.getSource()==travelCompleteButton) {
-			ListManager.myTravelList.peek().setCompletionTime();
-			ListManager.completedItems.add(ListManager.myTravelList.poll());
+			ListManager.completeTravelItem();
 			travelOutputMcField.setText("SUCCESS!");
 			travelCompleteButton.setEnabled(false);  // Disable "Travel Complete" button
 		}
-
+		// EXPERIENCE - Mark Complete Button
 		if(e.getSource()==expCompleteButton) {
-			ListManager.myExperienceList.peek().setCompletionTime();
-			ListManager.completedItems.add(ListManager.myExperienceList.poll());
+			ListManager.completeExperienceItem();
 			expOutputMcField.setText("SUCCESS!");
 			expCompleteButton.setEnabled(false);  // Disable "Experience Complete" button
 		}
-		
+		// PERSONAL GROWTH - Mark Complete Button
 		if(e.getSource()==pgCompleteButton) {
-			ListManager.myPersonalGrowthList.peek().setCompletionTime();
-			ListManager.completedItems.add(ListManager.myPersonalGrowthList.poll());
+			ListManager.completePersonalGrowthItem();
 			pgOutputMcField.setText("SUCCESS!");
 			pgCompleteButton.setEnabled(false);  // Disable "Personal Growth Complete" button
 		}
+		// Return To Main Menu Button
 		if(e.getSource()==returnMainMcButton) {
 			travelOutputMcField.setText(" ");	// Clear the Travel Field
 			expOutputMcField.setText(" ");		// Clear the Experience Field
@@ -554,8 +579,8 @@ public class MainFrame extends JFrame implements ActionListener {
 	    	repaint();
 		}
 
-
-// View Completed Items Panel Buttons			
+// View Completed Items Panel Buttons
+		// View By Category Button
 		if(e.getSource()==sortCategoryButton) {
 			remove(viewCompletedPanel);
 			add(byCategoryPanel);
@@ -563,7 +588,7 @@ public class MainFrame extends JFrame implements ActionListener {
 			revalidate();
 	    	repaint();
 		}
-		
+		// View By Date Completed Button
 		if(e.getSource()==sortCompletedButton) {
 			remove(viewCompletedPanel);
 			add(byCompletedPanel);
@@ -571,7 +596,15 @@ public class MainFrame extends JFrame implements ActionListener {
 			revalidate();
 	    	repaint();
 		}
-		
+		// View Alphabetically By Description Button
+		if(e.getSource()==sortAlphaButton) {
+			remove(viewCompletedPanel);
+			add(byAlphaPanel);
+			byAlphaTextArea.setText(ListManager.byAlphebiticalString());
+			revalidate();
+	    	repaint();
+		}
+		// Return To Main Menu Button
 		if(e.getSource()==returnMainVcButton) {
 			remove(viewCompletedPanel);
 			add(mainPanel);
@@ -579,17 +612,17 @@ public class MainFrame extends JFrame implements ActionListener {
 	    	repaint();
 		}
 
-
-// Sort By Category Panel Buttons			
+// Sort By Category Panel Buttons
+		// Return To View Completed Menu Button
 		if(e.getSource()==returnByCatButton) {
 			remove(byCategoryPanel);
 			add(viewCompletedPanel);
 			revalidate();
 	    	repaint();
 		}	
-		
 
-// Sort By Completed Panel Buttons			
+// Sort By Completed Panel Buttons
+		// Return To View Completed Menu Button
 		if(e.getSource()==returnByDateButton) {
 			remove(byCompletedPanel);
 			add(viewCompletedPanel);
@@ -597,7 +630,17 @@ public class MainFrame extends JFrame implements ActionListener {
 	    	repaint();
 		}
 		
-// Add New Bucket List Item Category Buttons
+// Sort By Completed Panel Buttons
+		// Return To View Completed Menu Button
+		if(e.getSource()==returnByAlphaButton) {
+			remove(byAlphaPanel);
+			add(viewCompletedPanel);
+			revalidate();
+	    	repaint();
+		}
+		
+// Add New Bucket List Item Panel Buttons
+		// Category Choice Radio Buttons
 		if(e.getSource()==travelCatButton) {
 			itemCategory = 1;
 		}
@@ -608,7 +651,7 @@ public class MainFrame extends JFrame implements ActionListener {
 			itemCategory = 3;
 		}
 		
-// Add New Bucket List Item Priority Buttons
+		// Priority Choice Radio Buttons
 		if(e.getSource()==priority1Button) {
 			itemPriority = 1;
 		}
@@ -624,19 +667,37 @@ public class MainFrame extends JFrame implements ActionListener {
 		if(e.getSource()==priority5Button) {
 			itemPriority = 5;
 		}
-		
+		// Save New Item Button
 		if(e.getSource()==enterItemAniButton) {
-			if (itemCategory == 1) {
-				ListManager.myTravelList.add(new TravelItem(descriptionField.getText(), itemPriority));
+			if (descriptionField.getText().isBlank() || descriptionField.getText().isEmpty()) {
+				aniPanelSpace2.setText("DESCRIPTION CANNOT BE BLANK");
+				descriptionField.setText("");
 			}
-			if (itemCategory == 2) {
-				ListManager.myExperienceList.add(new ExperienceItem(descriptionField.getText(), itemPriority));
+			else {
+				if (itemCategory == 1) {
+					ListManager.myTravelList.add(new TravelItem(descriptionField.getText(), itemPriority));
+				}
+				if (itemCategory == 2) {
+					ListManager.myExperienceList.add(new ExperienceItem(descriptionField.getText(), itemPriority));
+				}
+				if (itemCategory == 3) {
+					ListManager.myPersonalGrowthList.add(new PersonalGrowthItem(descriptionField.getText(), itemPriority));
+				}
+				descriptionField.setText("SUCCESS!");
+				aniPanelSpace2.setText("                                    ");
+				enterItemAniButton.setEnabled(false);	// Disable "Save New Item" button
 			}
-			if (itemCategory == 3) {
-				ListManager.myPersonalGrowthList.add(new PersonalGrowthItem(descriptionField.getText(), itemPriority));
-			}
-			descriptionField.setText("SUCCESS!");
-			enterItemAniButton.setEnabled(false);	// Disable "Save New Item" button
 		}
+		// Return To Main Menu Button			
+		if(e.getSource()==returnMainAniButton) {
+			travelCatButton.doClick();				// Reset the travelCatButton default
+			priority5Button.doClick();				// Reset the priority5Button default
+			descriptionField.setText(" ");			// Clear the descriptionField
+			enterItemAniButton.setEnabled(true);	// ReEnable "Save New Item" button
+			remove(addNewItemPanel);
+			add(mainPanel);
+			revalidate();
+	    	repaint();
+		}	
 	}
 }

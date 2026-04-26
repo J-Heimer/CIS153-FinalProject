@@ -15,12 +15,7 @@
 * I have not given other fellow student(s) access to my program.
 */
 
-import java.util.Scanner;
-
-
 public class BucketListDriver {
-	
-    static Scanner scanner = new Scanner(System.in);
 	
 	public static void main(String[] args) {
 		
@@ -35,7 +30,88 @@ public class BucketListDriver {
 		ListManager.myExperienceList.add(new ExperienceItem("Sky Diving", 4));
 		ListManager.myPersonalGrowthList.add(new PersonalGrowthItem("Learn To Play The Guitar", 2));
 		
+		// Add Fictional Items specifically for testing the alphabetical sort
+		// Include a time "pause" between each add() so the comparator has a clear time difference for sorting
+		ListManager.myTravelList.add(new TravelItem("A", 1));
+		try {
+		    Thread.sleep(100); // Pauses for 100 milliseconds (.1 second)
+		} catch (InterruptedException e) {
+		    // Handle the exception if the sleep is interrupted
+		    Thread.currentThread().interrupt();
+		}
+		ListManager.myExperienceList.add(new ExperienceItem("B", 1));
+		try {
+		    Thread.sleep(100); // Pauses for 100 milliseconds (.1 second)
+		} catch (InterruptedException e) {
+		    // Handle the exception if the sleep is interrupted
+		    Thread.currentThread().interrupt();
+		}
+		ListManager.myPersonalGrowthList.add(new PersonalGrowthItem("C", 1));
+		try {
+		    Thread.sleep(100); // Pauses for 100 milliseconds (.1 second)
+		} catch (InterruptedException e) {
+		    // Handle the exception if the sleep is interrupted
+		    Thread.currentThread().interrupt();
+		}
+		ListManager.myTravelList.add(new TravelItem("D", 1));
+		try {
+		    Thread.sleep(100); // Pauses for 100 milliseconds (.1 second)
+		} catch (InterruptedException e) {
+		    // Handle the exception if the sleep is interrupted
+		    Thread.currentThread().interrupt();
+		}
+		ListManager.myExperienceList.add(new ExperienceItem("E", 1));
+		try {
+		    Thread.sleep(100); // Pauses for 100 milliseconds (.1 second)
+		} catch (InterruptedException e) {
+		    // Handle the exception if the sleep is interrupted
+		    Thread.currentThread().interrupt();
+		}
+		ListManager.myPersonalGrowthList.add(new PersonalGrowthItem("F", 1));
+		try {
+		    Thread.sleep(100); // Pauses for 100 milliseconds (.1 second)
+		} catch (InterruptedException e) {
+		    // Handle the exception if the sleep is interrupted
+		    Thread.currentThread().interrupt();
+		}
+		ListManager.myTravelList.add(new TravelItem("G", 1));
+		try {
+		    Thread.sleep(100); // Pauses for 100 milliseconds (.1 second)
+		} catch (InterruptedException e) {
+		    // Handle the exception if the sleep is interrupted
+		    Thread.currentThread().interrupt();
+		}
+		ListManager.myExperienceList.add(new ExperienceItem("H", 1));
+		try {
+		    Thread.sleep(100); // Pauses for 100 milliseconds (.1 second)
+		} catch (InterruptedException e) {
+		    // Handle the exception if the sleep is interrupted
+		    Thread.currentThread().interrupt();
+		}
+		ListManager.myPersonalGrowthList.add(new PersonalGrowthItem("I", 1));
+		try {
+		    Thread.sleep(100); // Pauses for 100 milliseconds (.1 second)
+		} catch (InterruptedException e) {
+		    // Handle the exception if the sleep is interrupted
+		    Thread.currentThread().interrupt();
+		}
+		ListManager.myTravelList.add(new TravelItem("J", 1));
+		try {
+		    Thread.sleep(100); // Pauses for 100 milliseconds (.1 second)
+		} catch (InterruptedException e) {
+		    // Handle the exception if the sleep is interrupted
+		    Thread.currentThread().interrupt();
+		}
+		ListManager.myExperienceList.add(new ExperienceItem("K", 1));
+		try {
+		    Thread.sleep(100); // Pauses for 100 milliseconds (.1 second)
+		} catch (InterruptedException e) {
+		    // Handle the exception if the sleep is interrupted
+		    Thread.currentThread().interrupt();
+		}
+		ListManager.myPersonalGrowthList.add(new PersonalGrowthItem("L", 1));
+		
+		
 		new MainFrame();	
-    }
-// ***** END OF main *****		
+    }		
 }

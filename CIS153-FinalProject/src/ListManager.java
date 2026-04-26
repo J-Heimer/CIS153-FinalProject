@@ -19,266 +19,123 @@ import java.util.Comparator;
 import java.util.PriorityQueue;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Scanner;
-
 
 public class ListManager {
-	
-	// Declare Variables
-	int choice;
-	
+	// Declare PriorityQueue Comparators	
 	static Comparator<TravelItem> travelPriorityComparator = Comparator.comparing(TravelItem::getPriority).thenComparing(TravelItem::getTimestamp);
 	static Comparator<ExperienceItem> experiencePriorityComparator = Comparator.comparing(ExperienceItem::getPriority).thenComparing(ExperienceItem::getTimestamp);
 	static Comparator<PersonalGrowthItem> personalGrowthPriorityComparator = Comparator.comparing(PersonalGrowthItem::getPriority).thenComparing(PersonalGrowthItem::getTimestamp);
-	
+	// Declare PriorityQueues and ArrayList
 	static PriorityQueue<TravelItem> myTravelList = new PriorityQueue<TravelItem>(travelPriorityComparator);
 	static PriorityQueue<ExperienceItem> myExperienceList = new PriorityQueue<ExperienceItem>(experiencePriorityComparator);
 	static PriorityQueue<PersonalGrowthItem> myPersonalGrowthList = new PriorityQueue<PersonalGrowthItem>(personalGrowthPriorityComparator);
 	static ArrayList<Object> completedItems = new ArrayList<>();
+	// Declare a DateTimeFormatter
 	static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss a");
-
 	
-	static Scanner scanner = new Scanner(System.in);
-	
-	public static void printMainMenu() {
-		System.out.println("");
-		System.out.println("== MAIN MENU ==");
-        System.out.println("1. Add a new Bucket List Item");
-        System.out.println("2. Mark a Bucket List Item as completed");
-        System.out.println("3. View the next item on your Bucket List");
-        System.out.println("4. Search completed Bucket List Items");
-        System.out.println("5. Exit");
-    }
-// ***** END OF printMainMenu *****
-	
-	private static void printCategoryMenu() {
-		System.out.println("");
-		System.out.println("== CHOOSE A CATEGORY ==");
-        System.out.println("1. Experience");
-        System.out.println("2. Travel");
-        System.out.println("3. Personal Growth");
-        System.out.println("4. Exit");
-    }
-// ***** END OF printCategoryMenu *****
-	
-	public static int getIntInput(String message) {
-        System.out.print(message);
-        while (!scanner.hasNextInt()) {
-            System.out.print("Please enter a valid number: ");
-            scanner.next();
-        }
-        int input = scanner.nextInt();
-        scanner.nextLine(); // Consume the newline
-        return input;
-    }
-// ***** END OF getIntInput *****
-	
-	public static String getStringInput(String message) {
-        System.out.print(message);
-        String input = scanner.next();
-        scanner.nextLine(); // Consume the newline
-        return input;
-    }
-// ***** END OF getIntInput *****
-	
-	public static void addBucketListItem() {
-		int choice;
-		do {
-            printCategoryMenu();
-            choice = getIntInput("Choose an option: ");
-            switch (choice) {
-                case 1 -> addExperienceItem();
-                case 2 -> addTravelItem();
-                case 3 -> addPersonalGrowthItem();
-                case 4 -> System.out.println("\nReturning to Main Menu");
-                default -> System.out.println("\nInvalid option. Try again.");
-            }
-        } while (choice != 4);
-		System.out.println("");
-	}
-// ***** END OF addBucketListItem *****
-	
-	public static void MarkItemCompleted() {
-		
-		int choice;
-		do {
-			printItemsToComplete();
-            choice = getIntInput("Choose an option: ");
-            switch (choice) {
-                case 1 -> completedItems.add(myTravelList.poll());
-                case 2 -> completedItems.add(myExperienceList.poll());
-                case 3 -> completedItems.add(myPersonalGrowthList.poll());
-                case 4 -> System.out.println("Returning to Main Menu");
-                default -> System.out.println("Invalid option. Try again.");
-            }
-        } while (choice != 4);
-		System.out.println("");
-	}
-// ***** END OF MarkItemCompleted *****
-	
-	public static void viewNextItem() {
-		System.out.println("");
-		System.out.println("- THE NEXT ITEMS ON YOUR BUCKET LIST -");
-		if (myTravelList.isEmpty()) {
-			System.out.println("Next Travel Item: " + "** THIS LIST IS EMPTY **");
-		}
-		else {
-			System.out.println("Next Travel Item: " + myTravelList.peek().getDescription());
-		}
-		if (myExperienceList.isEmpty()) {
-			System.out.println("Next Experience Item: " + "** THIS LIST IS EMPTY **");
-		}
-		else {
-			System.out.println("Next Experience Item: " + myExperienceList.peek().getDescription());
-		}
-		if (myPersonalGrowthList.isEmpty()) {
-			System.out.println("Next Personal Growth Item: " + "** THIS LIST IS EMPTY **");
-		}
-		else {	
-		System.out.println("Next Personal Growth Item: " + myPersonalGrowthList.peek().getDescription());
-		}
-	}
-// ***** END OF viewNextItem *****
-	
-	public static void printItemsToComplete() {
-		System.out.println("");
-		System.out.println("- CHOOSE THE ITEM YOU HAVE COMPLETED -");
-		if (myTravelList.isEmpty()) {
-			System.out.println("1.  Travel: " + "** THIS LIST IS EMPTY **");
-		}
-		else {
-			System.out.println("1. Travel: " + myTravelList.peek().getDescription());
-		}
-		if (myExperienceList.isEmpty()) {
-			System.out.println("2. Experience: " + "** THIS LIST IS EMPTY **");
-		}
-		else {
-			System.out.println("2. Experience: " + myExperienceList.peek().getDescription());
-		}
-		if (myPersonalGrowthList.isEmpty()) {
-			System.out.println("3. Personal Growth: " + "** THIS LIST IS EMPTY **");
-		}
-		else {	
-		System.out.println("3. Personal Growth: " + myPersonalGrowthList.peek().getDescription());
-		}
-		System.out.println("4. Exit");
-	}
-// ***** END OF printItemsToComplete *****
-	
-	public static void deleteItem() {
-		//TODO;
-	}
-// ***** END OF deleteItem *****
-	
-	public static void searchCompletedItem() {
-		if (!completedItems.isEmpty()) {
-			System.out.println("");
-			for (Object item : completedItems) {
-				if (item instanceof TravelItem) {
-					TravelItem tI = (TravelItem) item;
-					System.out.println(tI.getCategory() + ": " + tI.getDescription());
-				}
-				if (item instanceof ExperienceItem) {
-					ExperienceItem tI = (ExperienceItem) item;
-					System.out.println(tI.getCategory() + ": " + tI.getDescription());
-				}
-				if (item instanceof PersonalGrowthItem) {
-					PersonalGrowthItem tI = (PersonalGrowthItem) item;
-					System.out.println(tI.getCategory() + ": " + tI.getDescription());
-				}
-			}
-		}
-		else {
-			System.out.println("");
-			System.out.println("You Have Not Completed Any Items Yet!");
-		}
-	}
-// ***** END OF searchCompletedItem *****
-	
-	public static void addExperienceItem() {
-		String description;
-		int priority;
-		description = getStringInput("Enter The Item Description: ");
-		priority = getIntInput("Enter the Priority 1 - 5: ");
-		if (priority < 1 || priority > 5) {
-			System.out.println("Your entry is not valid.  Please try again.");
-			priority = getIntInput("Enter the Priority 1 - 5: ");
-		}
-		myExperienceList.add(new ExperienceItem(description, priority));
+	/**
+	 * This method sets the completion time in the TravelItem object at the front of the myTravelList PriorityQueue
+	 * then it removes the object from the PriorityQueue and adds it to the completedItems ArrayList
+	 * @param - none
+	 * @return - void
+	 */
+	public static void completeTravelItem() {
+		myTravelList.peek().setCompletionTime();
+		completedItems.add(ListManager.myTravelList.poll());
+		return;
 	}
 	
-	public static void addTravelItem() {
-		String description;
-		int priority;
-		description = getStringInput("Enter The Item Description: ");
-		priority = getIntInput("Enter the Priority 1 - 5: ");
-		if (priority < 1 || priority > 5) {
-			System.out.println("Your entry is not valid.  Please try again.");
-			priority = getIntInput("Enter the Priority 1 - 5: ");
-		}
-		myTravelList.add(new TravelItem(description, priority));
+	/**
+	 * This method sets the completion time in the ExperienceItem object at the front of the myExperienceList PriorityQueue
+	 * then it removes the object from the PriorityQueue and adds it to the completedItems ArrayList
+	 * @param - none
+	 * @return - void
+	 */
+	public static void completeExperienceItem() {
+		myExperienceList.peek().setCompletionTime();
+		completedItems.add(ListManager.myExperienceList.poll());
+		return;
 	}
 	
-	public static void addPersonalGrowthItem() {
-		String description;
-		int priority;
-		description = getStringInput("Enter The Item Description: ");
-		priority = getIntInput("Enter the Priority 1 - 5: ");
-		if (priority < 1 || priority > 5) {
-			System.out.println("Your entry is not valid.  Please try again.");
-			priority = getIntInput("Enter the Priority 1 - 5: ");
-		}
-		myPersonalGrowthList.add(new PersonalGrowthItem(description, priority));
+	/**
+	 * This method sets the completion time in the PersonalGrowthItem object at the front of the myPersonalGrowthList PriorityQueue
+	 * then it removes the object from the PriorityQueue and adds it to the completedItems ArrayList
+	 * @param - none
+	 * @return - void
+	 */
+	public static void completePersonalGrowthItem() {
+		myPersonalGrowthList.peek().setCompletionTime();
+		completedItems.add(ListManager.myPersonalGrowthList.poll());
+		return;
 	}
 	
+	/**
+	 * This method will use list traversal to search the completedItems ArrayList for specific element types.
+	 * TravelItem objects are appended to a StringBuilder sbTravel, ExperienceItem objects are appended to a
+	 * StringBuilder sbExperience and PersonalGrowthItem object are appended to a StringBuilder sbPersonalGrowth.
+	 * When the traversal is complete, the 3 StringBuilders are appended to a StringBuilder with the header.
+	 * @param - none
+	 * @return String - categoryString is a column formatted multi-line String with headings containing all elements
+	 * 					in the completedItems ArrayList 
+	 */
 	public static String byCategoryString() {
-		StringBuilder sb = new StringBuilder();
+		StringBuilder sbAll = new StringBuilder();
+		StringBuilder sbTravel = new StringBuilder();
+		StringBuilder sbExperience = new StringBuilder();
+		StringBuilder sbPersonalGrowth = new StringBuilder();
 		String categoryString;
-		
-		sb.append(String.format("%-18s %-36s %s", " CATEGORY", "DESCRIPTION", "DATE COMPLETED\n"));
-		sb.append("-".repeat(80) + "\n");
-		
-		if (!completedItems.isEmpty()) {
+		// Create and format column headers
+		sbAll.append(String.format("%-18s %-36s %s", " CATEGORY", "DESCRIPTION", "DATE COMPLETED\n"));
+		sbAll.append("-".repeat(80) + "\n");
+		// Traverse the ArrayList and concatenate the object elements to the appropriate StringBuilder based on object type
+		if (!completedItems.isEmpty()) {  // If the completedItems ArrayList is empty than skip the traversal
 			System.out.println("");
 			for (Object item : completedItems) {
 				if (item instanceof TravelItem) {
 					TravelItem tI = (TravelItem) item;
-					sb.append(String.format("%-18s %-36s %s", " " + tI.getCategory(), tI.getDescription(), tI.getCompletionTime().format(formatter) + "\n"));
+					sbTravel.append(String.format("%-18s %-36s %s", " " + tI.getCategory(), tI.getDescription(), tI.getCompletionTime().format(formatter) + "\n"));
 				}
-			}
-			for (Object item : completedItems) {
 				if (item instanceof ExperienceItem) {
 					ExperienceItem eI = (ExperienceItem) item;
-					sb.append(String.format("%-18s %-36s %s", " " + eI.getCategory(), eI.getDescription(), eI.getCompletionTime().format(formatter) + "\n"));
+					sbExperience.append(String.format("%-18s %-36s %s", " " + eI.getCategory(), eI.getDescription(), eI.getCompletionTime().format(formatter) + "\n"));
 				}
-			}
-			for (Object item : completedItems) {
 				if (item instanceof PersonalGrowthItem) {
 					PersonalGrowthItem pgI = (PersonalGrowthItem) item;
-					sb.append(String.format("%-18s %-36s %s", " " + pgI.getCategory(), pgI.getDescription(), pgI.getCompletionTime().format(formatter) + "\n"));
+					sbPersonalGrowth.append(String.format("%-18s %-36s %s", " " + pgI.getCategory(), pgI.getDescription(), pgI.getCompletionTime().format(formatter) + "\n"));
 				}
 			}
+			sbAll.append(sbTravel);
+			sbAll.append(sbExperience);
+			sbAll.append(sbPersonalGrowth);
 		}
 		else {
-			sb.append("\n");
-			sb.append(String.format("%58s","You Have Not Completed Any Items Yet!\n"));
+			sbAll.append("\n");
+			sbAll.append(String.format("%58s","You Have Not Completed Any Items Yet!\n"));
 		}
 
-		categoryString = sb.toString();
-		System.out.print(categoryString);
+		categoryString = sbAll.toString();
 		return categoryString;
 	}
 	
+	/**
+	 * This method will use a queue retrieval (FIFO) to create a formatted String of all items contained
+	 * in the completedItems ArrayList.  FIFO will put the oldest item completed at the beginning of the
+	 * string which will but it at the top of the list.
+	 * @param - none
+	 * @return String - completedString is a column formatted multi-line String with headings containing all elements
+	 * 					in the completedItems ArrayList 
+	 */
 	public static String byCompletedString() {
 		StringBuilder sb = new StringBuilder();
-		String categoryString;
-		
+		String completedString;
 		sb.append(String.format("%-18s %-36s %s", " CATEGORY", "DESCRIPTION", "DATE COMPLETED\n"));
 		sb.append("-".repeat(80) + "\n");
-		
-		if (!completedItems.isEmpty()) {
+		// Beginning of the queue FIFO removal and concatenation to a StringBuilder sb
+		if (!completedItems.isEmpty()) {  // If the completedItems ArrayList is empty than skip the queue
 			System.out.println("");
-			for (Object item : completedItems) {
+			ArrayList<Object> completedItemsCopy = new ArrayList<>(completedItems);  //Create a copy of completedItems for queue removal
+			while (!completedItemsCopy.isEmpty()) {
+				Object item = completedItemsCopy.remove(0);  // Get and remove the object at front of the list
 				if (item instanceof TravelItem) {
 					TravelItem tI = (TravelItem) item;
 					sb.append(String.format("%-18s %-36s %s", " " + tI.getCategory(), tI.getDescription(), tI.getCompletionTime().format(formatter) + "\n"));
@@ -297,10 +154,148 @@ public class ListManager {
 			sb.append("\n");
 			sb.append(String.format("%58s","You Have Not Completed Any Items Yet!\n"));
 		}
-
-		categoryString = sb.toString();
-		System.out.print(categoryString);
-		return categoryString;
+		completedString = sb.toString();
+		return completedString;
 	}
 	
+	/**
+	 * This method uses bubble sort to arrange the objects in the completedItems ArrayList alphabetically by the description attribute
+	 * @param - none
+	 * @return String - alphebiticalString is a column formatted multi-line String with headings containing all elements
+	 * 					in the completedItems ArrayList 
+	 */
+	public static String byAlphebiticalString() {
+		StringBuilder sb = new StringBuilder();
+		String alphebiticalString;
+		
+		sb.append(String.format("%-18s %-36s %s", " CATEGORY", "DESCRIPTION", "DATE COMPLETED\n"));
+		sb.append("-".repeat(80) + "\n");
+		
+		if (!completedItems.isEmpty()) {  // If the completedItems ArrayList is empty than skip the sorting process
+			System.out.println("");
+			ArrayList<Object> completedItemsCopy = new ArrayList<>(completedItems);  //Create a copy of completedItems for sorting
+			// Beginning of nested loop to bubble sort the copied ArrayList alphabetically by the description element
+			for (int i = 0; i < completedItemsCopy.size(); i++) {
+	            for (int j = i + 1; j < completedItemsCopy.size(); j++) {
+	                // compareTo returns > 0 if names[i] follows names[j] alphabetically
+	                if ((completedItemsCopy.get(i) instanceof TravelItem) && (completedItemsCopy.get(j) instanceof TravelItem)) {
+	                	TravelItem tIi = (TravelItem) completedItemsCopy.get(i);
+	                	TravelItem tIj = (TravelItem) completedItemsCopy.get(j);
+						if (tIi.getDescription().compareTo(tIj.getDescription()) > 0) {   // compareTo returns > 0 if description(i) follows description(j) alphabetically
+		                    // Manual Swap
+		                    Object temp = completedItemsCopy.get(i);
+		                    completedItemsCopy.set(i, completedItemsCopy.get(j));
+		                    completedItemsCopy.set(j, temp);
+						}
+	                }
+	                if ((completedItemsCopy.get(i) instanceof TravelItem) && (completedItemsCopy.get(j) instanceof ExperienceItem)) {
+	                	TravelItem tIi = (TravelItem) completedItemsCopy.get(i);
+	                	ExperienceItem eIj = (ExperienceItem) completedItemsCopy.get(j);
+						if (tIi.getDescription().compareTo(eIj.getDescription()) > 0) {
+	                    // Manual Swap
+	                    Object temp = completedItemsCopy.get(i);
+	                    completedItemsCopy.set(i, completedItemsCopy.get(j));
+	                    completedItemsCopy.set(j, temp);
+						}
+	                }
+	                if ((completedItemsCopy.get(i) instanceof TravelItem) && (completedItemsCopy.get(j) instanceof PersonalGrowthItem)) {
+	                	TravelItem tIi = (TravelItem) completedItemsCopy.get(i);
+	                	PersonalGrowthItem pgIj = (PersonalGrowthItem) completedItemsCopy.get(j);
+						if (tIi.getDescription().compareTo(pgIj.getDescription()) > 0) {
+	                    // Manual Swap
+	                    Object temp = completedItemsCopy.get(i);
+	                    completedItemsCopy.set(i, completedItemsCopy.get(j));
+	                    completedItemsCopy.set(j, temp);
+						}
+	                }
+	                if ((completedItemsCopy.get(i) instanceof PersonalGrowthItem) && (completedItemsCopy.get(j) instanceof PersonalGrowthItem)) {
+	                	PersonalGrowthItem pgIi = (PersonalGrowthItem) completedItemsCopy.get(i);
+	                	PersonalGrowthItem pgIj = (PersonalGrowthItem) completedItemsCopy.get(j);
+						if (pgIi.getDescription().compareTo(pgIj.getDescription()) > 0) {
+	                    // Manual Swap
+	                    Object temp = completedItemsCopy.get(i);
+	                    completedItemsCopy.set(i, completedItemsCopy.get(j));
+	                    completedItemsCopy.set(j, temp);
+						}
+	                }
+	                if ((completedItemsCopy.get(i) instanceof PersonalGrowthItem) && (completedItemsCopy.get(j) instanceof TravelItem)) {
+	                	PersonalGrowthItem pgIi = (PersonalGrowthItem) completedItemsCopy.get(i);
+	                	TravelItem tIj = (TravelItem) completedItemsCopy.get(j);
+						if (pgIi.getDescription().compareTo(tIj.getDescription()) > 0) {
+	                    // Manual Swap
+	                    Object temp = completedItemsCopy.get(i);
+	                    completedItemsCopy.set(i, completedItemsCopy.get(j));
+	                    completedItemsCopy.set(j, temp);
+						}
+	                }
+	                if ((completedItemsCopy.get(i) instanceof PersonalGrowthItem) && (completedItemsCopy.get(j) instanceof ExperienceItem)) {
+	                	PersonalGrowthItem pgIi = (PersonalGrowthItem) completedItemsCopy.get(i);
+	                	ExperienceItem eIj = (ExperienceItem) completedItemsCopy.get(j);
+						if (pgIi.getDescription().compareTo(eIj.getDescription()) > 0) {
+	                    // Manual Swap
+	                    Object temp = completedItemsCopy.get(i);
+	                    completedItemsCopy.set(i, completedItemsCopy.get(j));
+	                    completedItemsCopy.set(j, temp);
+						}
+	                }
+	                if ((completedItemsCopy.get(i) instanceof ExperienceItem) && (completedItemsCopy.get(j) instanceof ExperienceItem)) {
+	                	ExperienceItem eIi = (ExperienceItem) completedItemsCopy.get(i);
+	                	ExperienceItem eIj = (ExperienceItem) completedItemsCopy.get(j);
+						if (eIi.getDescription().compareTo(eIj.getDescription()) > 0) {
+	                    // Manual Swap
+	                    Object temp = completedItemsCopy.get(i);
+	                    completedItemsCopy.set(i, completedItemsCopy.get(j));
+	                    completedItemsCopy.set(j, temp);
+						}
+	                }
+	                if ((completedItemsCopy.get(i) instanceof ExperienceItem) && (completedItemsCopy.get(j) instanceof TravelItem)) {
+	                	ExperienceItem eIi = (ExperienceItem) completedItemsCopy.get(i);
+	                	TravelItem tIj = (TravelItem) completedItemsCopy.get(j);
+						if (eIi.getDescription().compareTo(tIj.getDescription()) > 0) {
+	                    // Manual Swap
+	                    Object temp = completedItemsCopy.get(i);
+	                    completedItemsCopy.set(i, completedItemsCopy.get(j));
+	                    completedItemsCopy.set(j, temp);
+						}
+	                }
+	                if ((completedItemsCopy.get(i) instanceof ExperienceItem) && (completedItemsCopy.get(j) instanceof PersonalGrowthItem)) {
+	                	ExperienceItem eIi = (ExperienceItem) completedItemsCopy.get(i);
+	                	PersonalGrowthItem pgIj = (PersonalGrowthItem) completedItemsCopy.get(j);
+						if (eIi.getDescription().compareTo(pgIj.getDescription()) > 0) {
+	                    // Manual Swap
+	                    Object temp = completedItemsCopy.get(i);
+	                    completedItemsCopy.set(i, completedItemsCopy.get(j));
+	                    completedItemsCopy.set(j, temp);
+						}
+	                }
+	            }
+			}
+			// End of the Bubble Sort nested loop
+			// Traverse the newly sorted list and concatenate the object elements to a StringBuilder sb
+			if (!completedItemsCopy.isEmpty()) {
+				System.out.println("");
+				for (Object item : completedItemsCopy) {
+					if (item instanceof TravelItem) {
+						TravelItem tI = (TravelItem) item;
+						sb.append(String.format("%-18s %-36s %s", " " + tI.getCategory(), tI.getDescription(), tI.getCompletionTime().format(formatter) + "\n"));
+					}
+					if (item instanceof ExperienceItem) {
+						ExperienceItem eI = (ExperienceItem) item;
+						sb.append(String.format("%-18s %-36s %s", " " + eI.getCategory(), eI.getDescription(), eI.getCompletionTime().format(formatter) + "\n"));
+					}
+					if (item instanceof PersonalGrowthItem) {
+						PersonalGrowthItem pgI = (PersonalGrowthItem) item;
+						sb.append(String.format("%-18s %-36s %s", " " + pgI.getCategory(), pgI.getDescription(), pgI.getCompletionTime().format(formatter) + "\n"));
+					}
+				}
+			}
+		}
+		else {
+			sb.append("\n");
+			sb.append(String.format("%58s","You Have Not Completed Any Items Yet!\n"));
+		}
+		alphebiticalString = sb.toString();
+		return alphebiticalString;
+	}
+
 }
