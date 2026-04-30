@@ -29,7 +29,9 @@ public class BucketListDriver {
 		ListManager.myTravelList.add(new TravelItem("Brazil", 3));
 		ListManager.myExperienceList.add(new ExperienceItem("Sky Diving", 4));
 		ListManager.myPersonalGrowthList.add(new PersonalGrowthItem("Learn To Play The Guitar", 2));
-		
+
+// FICTIONAL LIST FOR ALPHABETICAL SORT TESTING - UNCOMMENT TO USE
+/*
 		// Add Fictional Items specifically for testing the alphabetical sort
 		// Include a time "pause" between each add() so the comparator has a clear time difference for sorting
 		ListManager.myTravelList.add(new TravelItem("A", 1));
@@ -110,7 +112,7 @@ public class BucketListDriver {
 		    Thread.currentThread().interrupt();
 		}
 		ListManager.myPersonalGrowthList.add(new PersonalGrowthItem("L", 1));
-		
+*/		
 		
 		new MainFrame();	
     }		
