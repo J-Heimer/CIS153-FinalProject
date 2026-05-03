@@ -21,8 +21,10 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -35,12 +37,15 @@ import javax.swing.SwingConstants;
 public class MainFrame extends JFrame implements ActionListener {
 	
 	private static final long serialVersionUID = 1L; // Added by Eclipse IDE
+	// Start Screen frame buttons
+	JButton startProgramButton;
+	JButton startExitButton;
 	// Main Menu frame buttons
 	JButton newItemButton;
 	JButton viewNextItemButton;
 	JButton markItemButton;
 	JButton viewCompletedButton;
-	JButton exitButton;
+	JButton mainExitButton;
 	// Add New Item Menu frame buttons
 	JRadioButton travelCatButton;
 	JRadioButton expCatButton;
@@ -89,6 +94,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	JButton returnByAlphaButton;
 	JTextArea byAlphaTextArea;
 	// Initialize Panels
+	JPanel startPanel;
 	JPanel mainPanel;
 	JPanel addNewItemPanel;
 	JPanel viewNextItemPanel;
@@ -102,6 +108,58 @@ public class MainFrame extends JFrame implements ActionListener {
 	int itemPriority;  // Urgent = 1, High = 2, Medium = 3, Low = 4, Minor = 5
 	
 	public MainFrame() {
+// Start Screen Panel
+		FlowLayout startPanelLayout = new FlowLayout();
+		startPanelLayout.setHgap(50);
+		startPanelLayout.setVgap(35);
+		Color purple = new Color(255, 0, 255);
+		Color ltGray = new Color(222, 222, 222);		
+		URL imgTitleURL = getClass().getResource("title.png");
+		URL imgBucketURL = getClass().getResource("bucket.png"); // bucket.png image provided by https://pixabay.com/vectors/bucket-container-vessel-1300542/ - OpenClipart-Vectors
+		startProgramButton = new JButton("Start Program");
+		startProgramButton.setPreferredSize(new Dimension(201,25));
+		startExitButton = new JButton("Exit Program");
+		startExitButton.setPreferredSize(new Dimension(200,25));
+		startProgramButton.addActionListener(this);
+		startExitButton.addActionListener(this);
+		startPanel = new JPanel();
+		startPanel.setBackground(new Color(0,0,0));
+		startPanel.setLayout(startPanelLayout);
+		// If Title image is not found, skip loading the image
+		if (imgTitleURL != null) {
+			ImageIcon title = new ImageIcon(imgTitleURL);
+			JLabel titleImage = new JLabel(title);
+			startPanel.add(titleImage);
+		}
+		else {  // Alternate Title
+			JLabel startPanelTitle = new JLabel("      BUCKET LIST APP      ");
+			Font startTitleFont = startPanelTitle.getFont().deriveFont(Font.BOLD + Font.ITALIC, 36f);
+			startPanelTitle.setFont(startTitleFont);
+			startPanelTitle.setForeground(purple);
+			startPanelTitle.setBackground(ltGray);
+			startPanelTitle.setOpaque(true);
+			startPanel.add(startPanelTitle);
+		}
+		// If Bucket image is not found, skip loading the image
+		if ( imgBucketURL != null) {
+			ImageIcon bucket = new ImageIcon(imgBucketURL);
+			JLabel bucket1Image = new JLabel(bucket);
+			JLabel bucket2Image = new JLabel(bucket);
+			startPanel.add(bucket1Image);
+			startPanel.add(startProgramButton);
+			startPanel.add(bucket2Image);
+		}
+		else { // Alternate Bucket (blank space)
+			JLabel startPanelSpace1 = new JLabel("             ");
+			startPanelSpace1.setFont(new Font("Monospaced", Font.BOLD, 14));
+			JLabel startPanelSpace2 = new JLabel("             ");
+			startPanelSpace2.setFont(new Font("Monospaced", Font.BOLD, 14));
+			startPanel.add(startPanelSpace1);
+			startPanel.add(startProgramButton);
+			startPanel.add(startPanelSpace2);
+		}
+		startPanel.add(startExitButton);
+		
 // Main Menu Panel		
 		FlowLayout mainPanelLayout = new FlowLayout();
 		mainPanelLayout.setHgap(95);
@@ -117,14 +175,14 @@ public class MainFrame extends JFrame implements ActionListener {
 		markItemButton.setPreferredSize(new Dimension(200,25));
 		viewCompletedButton = new JButton("View Completed Items");
 		viewCompletedButton.setPreferredSize(new Dimension(200,25));
-		exitButton = new JButton("Exit Program");
-		exitButton.setPreferredSize(new Dimension(200,25));
+		mainExitButton = new JButton("Exit Program");
+		mainExitButton.setPreferredSize(new Dimension(200,25));
 
 		newItemButton.addActionListener(this);
 		viewNextItemButton.addActionListener(this);
 		markItemButton.addActionListener(this);
 		viewCompletedButton.addActionListener(this);
-		exitButton.addActionListener(this);
+		mainExitButton.addActionListener(this);
 
 		mainPanel = new JPanel();
 		mainPanel.setBackground(new Color(200,50,250));
@@ -134,7 +192,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		mainPanel.add(viewNextItemButton);
 		mainPanel.add(markItemButton);
 		mainPanel.add(viewCompletedButton);
-		mainPanel.add(exitButton);
+		mainPanel.add(mainExitButton);
 
 // Add New Bucket List Item Panel
 		FlowLayout addNewItemPanelLayout = new FlowLayout();
@@ -454,13 +512,27 @@ public class MainFrame extends JFrame implements ActionListener {
 		this.setSize(600, 465);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.add(mainPanel);
+		this.add(startPanel);
 		this.setVisible(true);
 	}
 
 // BEGINNING OF ACTION LISTENERS
 	@Override
 	public void actionPerformed(ActionEvent e) {		
+// Start Screen Panel Buttons
+		// Start Program Button
+		if(e.getSource()==startProgramButton) {
+			remove(startPanel);
+			add(mainPanel);
+			revalidate();
+	    	repaint();	
+		}
+		
+		// Exit Program Button
+				if(e.getSource()==startExitButton) {
+					this.dispose();
+				}
+		
 // Main Menu Panel Buttons
 		// Add New Bucket List Item Button
 		if(e.getSource()==newItemButton) {
@@ -530,7 +602,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	    	repaint();
 		}
 		// Exit Program Button
-		if(e.getSource()==exitButton) {
+		if(e.getSource()==mainExitButton) {
 			this.dispose();
 		}
 

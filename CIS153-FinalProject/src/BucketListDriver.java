@@ -18,7 +18,9 @@
 public class BucketListDriver {
 	
 	public static void main(String[] args) {
-		
+	
+// FICTIONAL LIST FOR DEMONSTRATION AND TESTING - UNCOMMENT TO USE
+/*
 		// Add Fictional Items For Test Purposes
 		ListManager.myTravelList.add(new TravelItem("Alaska", 4));
 		ListManager.myExperienceList.add(new ExperienceItem("Great White Shark Cage Dive", 3));
@@ -29,7 +31,8 @@ public class BucketListDriver {
 		ListManager.myTravelList.add(new TravelItem("Brazil", 3));
 		ListManager.myExperienceList.add(new ExperienceItem("Sky Diving", 4));
 		ListManager.myPersonalGrowthList.add(new PersonalGrowthItem("Learn To Play The Guitar", 2));
-
+*/
+		
 // FICTIONAL LIST FOR ALPHABETICAL SORT TESTING - UNCOMMENT TO USE
 /*
 		// Add Fictional Items specifically for testing the alphabetical sort

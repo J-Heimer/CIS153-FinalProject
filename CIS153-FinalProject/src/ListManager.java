@@ -155,7 +155,6 @@ public class ListManager {
 			sb.append(String.format("%58s","You Have Not Completed Any Items Yet!\n"));
 		}
 		completedString = sb.toString();
-		System.out.println(completedString);
 		return completedString;
 	}
 	
